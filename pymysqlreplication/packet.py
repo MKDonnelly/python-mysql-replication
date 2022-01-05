@@ -352,7 +352,9 @@ class BinLogPacketWrapper(object):
     def read_binary_json_type(self, t, length):
         large = (t in (JSONB_TYPE_LARGE_OBJECT, JSONB_TYPE_LARGE_ARRAY))
         if t in (JSONB_TYPE_SMALL_OBJECT, JSONB_TYPE_LARGE_OBJECT):
-            return self.read_binary_json_object(length - 1, large)
+            # Doesn't handle JSON fields very well. Read, ignore, and return None.
+            self.read(length - 1)
+            return None
         elif t in (JSONB_TYPE_SMALL_ARRAY, JSONB_TYPE_LARGE_ARRAY):
             return self.read_binary_json_array(length - 1, large)
         elif t in (JSONB_TYPE_STRING, JSONB_TYPE_OPAQUE):
