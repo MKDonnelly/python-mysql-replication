@@ -355,7 +355,7 @@ class BinLogPacketWrapper(object):
             return self.read_binary_json_object(length - 1, large)
         elif t in (JSONB_TYPE_SMALL_ARRAY, JSONB_TYPE_LARGE_ARRAY):
             return self.read_binary_json_array(length - 1, large)
-        elif t in (JSONB_TYPE_STRING,):
+        elif t in (JSONB_TYPE_STRING, JSONB_TYPE_OPAQUE):
             return self.read_variable_length_string()
         elif t in (JSONB_TYPE_LITERAL,):
             value = self.read_uint8()
